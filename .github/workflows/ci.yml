@@ -1,0 +1,34 @@
+name: ci
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run the unit tests
+        run: python -m pytest -q
+
+      - name: Smoke-test the pipeline
+        run: |
+          python scripts/generate_microdata.py
+          python scripts/run_risk.py
+          python scripts/run_ckm.py
+          python scripts/run_suppress.py
+          python scripts/make_ru_plot.py
+          python scripts/make_spatial.py
+          python scripts/make_ptable_plot.py

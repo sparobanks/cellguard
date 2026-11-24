@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+.DS_Store
+
+# Generated data and text reports (regenerate with the Makefile).
+# The chart PNGs under reports/ are committed so they show in the README.
+data/*.csv
+reports/*.txt
